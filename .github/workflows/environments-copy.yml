@@ -1,0 +1,17 @@
+name: Use environment - mix workflows
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        type: environment
+        required: true
+        description: Environment
+
+jobs:
+  run-on-env-2:
+    runs-on: ubuntu-latest
+    environment: ${{ inputs.environment }}
+    steps:
+      - name: Do nothing
+        run: echo
