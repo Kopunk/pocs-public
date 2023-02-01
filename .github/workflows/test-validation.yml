@@ -1,0 +1,28 @@
+name: test optional inputs
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        required: true
+        type: environment
+        description: Environment
+      confirm:
+        required: true
+        type: boolean
+        default: false
+        description: Confirm
+
+jobs:
+  validate-inputs:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Validate Input Values
+        run: |
+          if [[ "${{ inputs.environment }}" == "production" ]]; then
+            if [[ "${{ inputs.confirm }}" != "true" ]]; then
+              exit 1
+            fi
+          elif [[ "${{ inputs.confirm }}" == "true" ]]; then
+            exit 1
+          fi
